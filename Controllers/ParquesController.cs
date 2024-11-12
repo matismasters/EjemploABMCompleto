@@ -33,6 +33,7 @@ namespace EjemploABMCompleto.Controllers
             }
 
             var parque = _context.Parques
+                .Include(p => p.Atracciones)
                 .FirstOrDefault(m => m.Id == id);
             if (parque == null)
             {

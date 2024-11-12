@@ -8,7 +8,7 @@ namespace EjemploABMCompleto.Models
         public static string[] EdadesObjetivo = new string[] { "Niños", "Adolescentes", "Adultos", "Adultos Mayores" };
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Nombre no pude estar vacio")]
+        [Required(ErrorMessage = "Nombre no puede estar vacio")]
         public string Nombre { get; set; }
 
         public string? Telefono { get; set; }
