@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Buscador de Parques";
+}
+
+<h1>Buscar</h1>
+
+<!-- Agregamos un input y un boton para poder buscar parques -->
+
+<form asp-action="Buscar" method="get">
+    <div class="form-group">
+        <label class="control-label"></label>
+        @if(ViewBag.Busqueda != null)
+        {
+            <input name="busqueda" class="form-control" value="@ViewBag.Busqueda" />
+        } else
+        {
+            <p>No se ha buscado nada</p>
+            <input name="busqueda" class="form-control" />
+        }
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Buscar" class="btn btn-primary" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Telefono
+            </th>
+            <th>
+                Direccion
+            </th>
+            <th>
+                Edad Objetivo
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Parque item in ViewBag.Encontrados)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EdadObjetivo)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

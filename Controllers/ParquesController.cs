@@ -18,6 +18,21 @@ namespace EjemploABMCompleto.Controllers
             _context = context;
         }
 
+        // GET: Parques/Buscar
+        public IActionResult Buscar(string busqueda) {
+            if (busqueda != null)
+            {
+                Console.WriteLine(busqueda);
+                ViewBag.Busqueda = busqueda;
+                ViewBag.Encontrados = _context.Parques.Where(
+                    p => p.Nombre.Contains(busqueda)
+                ).ToList();
+            } else
+            {
+                ViewBag.Encontrados = new List<Parque>();
+            }
+            return View();
+        }
         // GET: Parques
         public IActionResult Index()
         {
@@ -154,6 +169,10 @@ namespace EjemploABMCompleto.Controllers
         private bool ParqueExists(int id)
         {
             return _context.Parques.Any(e => e.Id == id);
+        }
+        private bool ParqueExists(string nombre)
+        {
+            return _context.Parques.Any(e => e.Nombre == nombre);
         }
     }
 }

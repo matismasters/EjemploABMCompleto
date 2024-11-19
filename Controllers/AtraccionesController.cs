@@ -60,9 +60,15 @@ namespace EjemploABMCompleto.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(atraccion);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                if (ExisteAtraccion(atraccion.Nombre) == false)
+                {
+                    _context.Add(atraccion);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(CreadoConExito));
+                } else
+                {
+                    ViewBag.Error = "La atracción ya existe con ese nombre";
+                }
             }
             ViewData["IdParque"] = new SelectList(_context.Parques, "Id", "Nombre", atraccion.IdParque);
             ViewBag.Tipos = Atraccion.Tipos;
@@ -161,9 +167,20 @@ namespace EjemploABMCompleto.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Atracciones/CreadoConExito
+        public IActionResult CreadoConExito()
+        {
+            return View();
+        }
+
         private bool AtraccionExists(int id)
         {
             return _context.Atracciones.Any(e => e.Id == id);
+        }
+
+        private bool ExisteAtraccion(string nombre)
+        {
+            return _context.Atracciones.Any(e => e.Nombre == nombre);
         }
     }
 }
